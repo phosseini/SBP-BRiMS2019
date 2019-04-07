@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import glob
 import math
-import my_main
 import xlsxwriter
 import copy
 from gensim import utils
@@ -206,7 +205,7 @@ def reformat_dataset():
 
         # writing all docs into a text file to further use in topic model training
         with open(base_path + 'processed/fakenewsnet_gensim.txt', 'w') as text_file:
-            for doc in all_docs:
+            for doc in all_docs_gensim:
                 text_file.write(doc + '\n')
 
         # writing all docs into a text file to further use in topic model training
@@ -225,9 +224,6 @@ def reformat_dataset():
         print("Sum all: " + str(stat["polifake"] + stat["polireal"] + stat["buzzfake"] + stat["buzzreal"]))
         print("Fake spread count: " + str(fake_spread_all))
         print("Real spread count: " + str(real_spread_all))
-        print("---------------------")
-        print("Fake affected count: " + str(fake_affected_all))
-        print("Real affected count: " + str(real_affected_all))
 
 
 def create_prerequisites():
@@ -256,32 +252,32 @@ def create_prerequisites():
     print("Prerequisites are created successfully.")
 
 
-def create_fakenewsnet_text_cohmetrix():
+def create_cohmetrix_input():
     """
     this method creates text files of title and body of news articles
     separately to be used as the input of coh-metrix
     :return:
     """
-    # all_data = pd.read_csv(base_path + "fakenewsnet.csv")
+
     # creating a text file of all the records
     print("[-->] Start creating text file...")
-    for file in glob.glob(base_path + "all/*.json"):
-        with open(file, 'r') as current_file:
-            try:
-                page_source = json.load(current_file)
-                # getting original id
-                tmp = file.split('/')
-                original_id = tmp[len(tmp)-1].split('-')[0]
-                news_title = my_main.text_clean(page_source["title"], True, True, False, 1)
-                news_body = my_main.text_clean(page_source["text"], True, True, False, 1)
-                with open(base_path + 'cohmetrix/title/' + original_id + '.txt', 'w+') as text_file:
-                    text_file.write(news_title + '\n')
-                    text_file.close()
-                with open(base_path + 'cohmetrix/body/' + original_id + '.txt', 'w+') as text_file:
-                    text_file.write(news_body + '\n')
-                    text_file.close()
-            except Exception as e:
-                print(e)
+
+    f = open(base_path + 'processed/fakenewsnet.csv')
+    csv_f = csv.reader(f)
+
+    for row in csv_f:
+        if row[0].isdigit():
+            news_id = row[0]
+            news_title = row[2]
+            news_body = row[3]
+            distinct_shares = row[8]
+            with open(base_path + 'cohmetrix/title/t' + news_id + '_' + distinct_shares + '.txt', 'w+') as text_file:
+                text_file.write(news_title + '\n')
+                text_file.close()
+            with open(base_path + 'cohmetrix/body/b' + news_id + '_' + distinct_shares + '.txt', 'w+') as text_file:
+                text_file.write(news_body + '\n')
+                text_file.close()
+
     print("[-->] Text file is created successfully")
 
 
@@ -367,10 +363,10 @@ def coh_regression_after_pca():
 # create_prerequisites()
 
 # step 1: reformatting the data
-reformat_dataset()
+# reformat_dataset()
 
 # step 2: creating the inputs for coh-metrix
-# create_fakenewsnet_text_cohmetrix()
+create_cohmetrix_input()
 
 # experiments
 # 1: running LSA model and using Foltz method

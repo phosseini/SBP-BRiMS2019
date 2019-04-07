@@ -80,7 +80,4 @@ def text_clean(text, url_removal, tag_removal, stem_stop_punc, punc_removal):
     # removing more than one space
     text = ' '.join(text.split())
 
-    # removing more than one space
-    text = ' '.join(x for x in text.split() if not x.isdigit())
-
     return text.strip()
