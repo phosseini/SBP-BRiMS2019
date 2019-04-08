@@ -7,7 +7,9 @@ The input files to our analysis are the news documents from [FakeNewsNet](https:
 
 ## Pre-processing
 
-We processed all the news documents in the dataset and stored a reformatted version in an excel file which can found at ```data/processed/fakenewsnet.csv```. The method we defined for cleaning documents is called ```text_clean()``` which can be found in the ```pre_processing.py```. We then created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/cohmetrix/cohout/fakenewsnet_coh.csv```
+We processed all the news documents in the dataset and stored a reformatted version in an excel file which can found at ```data/processed/fakenewsnet.csv```. The method we defined for cleaning documents is called ```text_clean()``` which can be found in the ```pre_processing.py```. A list of news documents' ids that we excluded from our analysis can be found in ```trash.txt``` at ```data/trash.txt```. We excluded these documents since they did not have a proper value in their body text of the article thus uselsess for Coh-metrix. 
+
+We then created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/cohmetrix/cohout/fakenewsnet_coh.csv```
 
 ## Regression analysis
 All the regression analysis that we did in R can be found in a jupyter notebook named ```regression_analysis.ipynb```.
@@ -19,7 +21,7 @@ Please use the following information to cite our paper:
 @inproceedings{hosseini2019causalcoherence,
                title={Does Causal Coherence Predict Online Spread of Social Media?},
                author={Hosseini, Pedram and Diab, Mona and Broniatowski, David A.},
-               booktitle={International Conference on Social Computing, Behavioral-Cultural Modeling and Prediction and                      Behavior Representation in Modeling and Simulation (SBP-BRiMS).},
+               booktitle={International Conference on Social Computing, Behavioral-Cultural Modeling and Prediction and Behavior Representation in Modeling and Simulation (SBP-BRiMS).},
                year={2019},
                organization={Springer.}
 }
