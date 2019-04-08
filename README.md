@@ -14,9 +14,10 @@ We processed all the news documents in the dataset and stored a reformatted vers
 We then created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/cohmetrix/cohout/fakenewsnet_coh.csv```
 
 At the end, we created a final excel file named ```fakenewsnet_full.xlsx``` which can be found at ```data/processed/fakenewsnet_full.xlsx``` and includes the Coh-metrx indexes for all the news documents in addition to three following columns:
-..* ```label```: truth label of the news article from FakeNewsNet which be either fake or real.
-..* ```shares```: the number of disticst users who shared a news article. It is important ot mention that in FakeNewsNet, each user can share the same news article multiple times; however, in our analysis, we considered the distinct number of users who shared a news article as the count of shares of the news article. 
-..* ```id```: id of the news article which matched the id columns in the ```fakenewsnet.csv```
+
+* ```label```: truth label of the news article from FakeNewsNet which be either fake or real.
+* ```shares```: the number of disticst users who shared a news article. It is important ot mention that in FakeNewsNet, each user can share the same news article multiple times; however, in our analysis, we considered the distinct number of users who shared a news article as the count of shares of the news article. 
+* ```id```: id of the news article which matched the id columns in the ```fakenewsnet.csv```
 
 ## Regression analysis
 All the regression analysis that we did in R can be found in a jupyter notebook named ```regression_analysis.ipynb```.
