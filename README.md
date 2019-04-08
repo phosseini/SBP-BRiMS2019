@@ -21,10 +21,4 @@ Please use the following information to cite our paper:
   booktitle={International Conference on Social Computing, Behavioral-Cultural Modeling and Prediction and Behavior Representation in Modeling and Simulation (SBP-BRiMS) 2019.},
   year={},
   organization={Springer.}
-}```
-
-
-
-
-
-
+}
