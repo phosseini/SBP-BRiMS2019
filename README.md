@@ -15,10 +15,11 @@ All the regression analysis that we did in R can be found in a jupyter notebook 
 ### Citation
 Please use the following information to cite our paper:
 
-```@inproceedings{hosseini2019causalcoherence,
- title={Does Causal Coherence Predict Online Spread of Social Media?},
-  author={Hosseini, Pedram and Diab, Mona and Broniatowski, David A.},
-  booktitle={International Conference on Social Computing, Behavioral-Cultural Modeling and Prediction and Behavior Representation in Modeling and Simulation (SBP-BRiMS) 2019.},
-  year={},
-  organization={Springer.}
+```
+@inproceedings{hosseini2019causalcoherence,
+               title={Does Causal Coherence Predict Online Spread of Social Media?},
+               author={Hosseini, Pedram and Diab, Mona and Broniatowski, David A.},
+               booktitle={International Conference on Social Computing, Behavioral-Cultural Modeling and Prediction and                      Behavior Representation in Modeling and Simulation (SBP-BRiMS).},
+               year={2019},
+               organization={Springer.}
 }
