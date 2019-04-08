@@ -281,62 +281,70 @@ def create_cohmetrix_input():
     print("[-->] Text file is created successfully")
 
 
-def coh_regresssion_before_pca():
-    main_data = pd.read_csv(base_path + "fakenewsnet.csv")
-    coh_data = pd.read_csv(base_path + "cohmetrix/cohout/fake_cohmetrix.csv")
+def coh_creating_regresssion_input():
+    """
+    creating a single excel file as inout to regression analysis using the coh-metrix output
+    :return:
+    """
+    main_data = pd.read_csv(base_path + "processed/fakenewsnet.csv")
+    coh_data = pd.read_csv(base_path + "cohmetrix/cohout/fakenewsnet_coh.csv")
     x_columns = list(coh_data.iloc[:, 1:])
-    # y_lin = main_data.iloc[:, 7]
     x_reg = []
     y_reg = []
-    x_lin = []
-    y_lin = []
+    x_ids = []
     fact_labels = []
     for item in coh_data.iterrows():
-        x = item[1][1:]
         tmp = item[1][0].split('\\')
-        my_id = tmp[len(tmp)-1].replace('.txt', '')
-        my_record = main_data.loc[main_data['OriginalId'] == my_id]
-        truth_label = my_record.values[0][11]
-        y = my_record.values[0][7]
-        if y != 0:
-            x_lin.append(x)
-            y_lin.append(y)
-            # adding fact checking label (fake/real)
-            if truth_label == "fake":
-                fact_labels.append(1)
-            else:
-                fact_labels.append(0)
+        tmp = tmp[len(tmp)-1].split('.')[0].split('_')
+        news_id = int(tmp[0].replace('b', ''))
+        news_distinct_shares = int(tmp[1])
 
-    y_lin = np.array(y_lin)
+        # finding the truth label
+        my_record = main_data.loc[main_data['Id'] == news_id]
+        main_news_distinct_shares = my_record.values[0][8]
+        truth_label = my_record.values[0][9]
+
+        # double checking the number of shares
+        if news_distinct_shares == main_news_distinct_shares:
+            if news_distinct_shares != 0:
+                x_reg.append(item[1][1:])
+                y_reg.append(news_distinct_shares)
+                x_ids.append(news_id)
+                # adding fact checking label (fake/real)
+                if truth_label == "fake":
+                    fact_labels.append(1)
+                else:
+                    fact_labels.append(0)
+
+    y_reg = np.array(y_reg)
+    x_ids = np.array(x_ids)
     # define vectorized sigmoid
-    log_func = np.vectorize(math.log)
-    y_lin = log_func(y_lin)
+    log_func = np.vectorize(math.log10)
+    y_reg = log_func(y_reg)
 
     # converting list to dataframe
-    x_lin = pd.DataFrame(np.array(x_lin).reshape(len(x_lin), len(x_columns)), columns=x_columns)
+    x_reg = pd.DataFrame(np.array(x_reg).reshape(len(x_reg), len(x_columns)), columns=x_columns)
     # dropping constant value columns
     # x_lin = np.array(x_lin)
-    x_lin = drop_constant_columns(x_lin)
+    x_reg = drop_constant_columns(x_reg)
 
     # scaling the data
     # scaler = MinMaxScaler(feature_range=(0, 1))
     # x_lin = scaler.fit_transform(x_lin)
 
-    causal_info = pd.read_excel(base_path + "fakenewsnet_causal.xlsx")
-
-    x_full = copy.deepcopy(x_lin)
-    x_full["CREL"] = causal_info["rels"]
-    x_full["CRELWD"] = causal_info["rels/words"]
-    x_full["CRELSC"] = causal_info["rels/sentences"]
-    x_full["shares"] = y_lin
+    x_full = copy.deepcopy(x_reg)
     x_full["label"] = fact_labels
+    x_full["shares"] = y_reg
+    x_full["id"] = x_ids
     x_full = x_full.fillna(0)
-    writer = pd.ExcelWriter(base_path + 'faker.xlsx')
+    writer = pd.ExcelWriter(base_path + 'processed/fakenewsnet_full.xlsx')
     x_full.to_excel(writer, 'Sheet1')
     writer.save()
 
-    print(" === Experiment 1 ===")
-    linear_regression(x_lin, y_lin, "")
+    print("Created regression input files successfully.")
+
+    # print(" === Experiment 1 ===")
+    # linear_regression(x_reg, y_reg, "")
 
     # print(" === Experiment 2 ===")
     # x_rel = causal_info.iloc[:, len(list(causal_info))-3:len(list(causal_info))]
@@ -366,7 +374,9 @@ def coh_regression_after_pca():
 # reformat_dataset()
 
 # step 2: creating the inputs for coh-metrix
-create_cohmetrix_input()
+# create_cohmetrix_input()
+
+coh_creating_regresssion_input()
 
 # experiments
 # 1: running LSA model and using Foltz method
