@@ -7,13 +7,13 @@ The input files to our analysis are the news documents from [FakeNewsNet](https:
 
 ## Pre-processing
 
-We processed all the news documents in the dataset and stored a reformatted version in an excel file which can found at ```data/processed/fakenewsnet.csv```. The method we defined for cleaning documents is called ```text_clean()``` which can be found in the ```pre_processing.py```. A list of news documents' ids that we excluded from our analysis can be found in ```trash.txt``` at ```data/trash.txt```. We excluded these documents since they did not have a proper value in their body text of the article thus uselsess for Coh-metrix. 
+We processed all the news documents in the dataset and stored a reformatted version in an excel file which can found at ```data/FakeNewsNet/processed/fakenewsnet.csv```. The method we defined for cleaning documents is called ```text_clean()``` which can be found in the ```pre_processing.py```. A list of news documents' ids that we excluded from our analysis can be found in ```trash.txt``` at ```data/FakeNewsNet/trash.txt```. We excluded these documents since they did not have a proper value in their body text of the article thus uselsess for Coh-metrix. 
 
 
 ## Applying Coh-metrix
-We then created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/cohmetrix/cohout/fakenewsnet_coh.csv```
+We then created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/FakeNewsNet/cohmetrix/cohout/fakenewsnet_coh.csv```
 
-At the end, we created a final excel file named ```fakenewsnet_full.xlsx``` which is the input to our regression analysis and can be found at ```data/processed/fakenewsnet_full.xlsx```. This file includes the Coh-metrx indexes for all the news documents in addition to the three following columns:
+At the end, we created a final excel file named ```fakenewsnet_full.xlsx``` which is the input to our regression analysis and can be found at ```data/FakeNewsNet/processed/fakenewsnet_full.xlsx```. This file includes the Coh-metrx indexes for all the news documents in addition to the three following columns:
 
 * ```label```: truth label of the news article from FakeNewsNet which be either fake or real.
 * ```shares```: the number of disticst users who shared a news article. It is important ot mention that in FakeNewsNet, each user can share the same news article multiple times; however, in our analysis, we considered the distinct number of users who shared a news article as the count of shares of the news article. 
