@@ -343,29 +343,6 @@ def coh_creating_regresssion_input():
 
     print("Created regression input files successfully.")
 
-    # print(" === Experiment 1 ===")
-    # linear_regression(x_reg, y_reg, "")
-
-    # print(" === Experiment 2 ===")
-    # x_rel = causal_info.iloc[:, len(list(causal_info))-3:len(list(causal_info))]
-    # x_rel = x_rel.fillna(0)
-    # linear_regression(x_rel, y_lin, "")
-
-
-def coh_regression_after_pca():
-    # loading disney shares files
-    all_data = pd.read_csv(base_path + 'r_coh_fake.csv')
-    model_features = list(all_data)
-
-    x_lin = all_data.iloc[:, 1:len(model_features) - 1]
-    y_lin = all_data.iloc[:, len(model_features) - 1]
-
-    # scaling the data
-    model_features = list(x_lin)
-
-    print(" === Experiment 1 ===")
-    linear_regression(x_lin, y_lin, model_features)
-
 
 # step 0: creating prerequisites files
 # create_prerequisites()
@@ -376,18 +353,5 @@ def coh_regression_after_pca():
 # step 2: creating the inputs for coh-metrix
 # create_cohmetrix_input()
 
-coh_creating_regresssion_input()
-
-# experiments
-# 1: running LSA model and using Foltz method
-# run_lsa_fakenewsnet_foltz()
-
-# 2: running and loading the LDA model
-# run_lda_fakenewsnet_topic_coherence(10)
-
-# 3: running GloVe on fakenewsnet
-# run_glove_fakenewsnet(0)
-# run_glove_mongotwitter(1)
-
-# 4: to extract causal relations of news documents
-# fakenewsnet_causal_relations()
+# step 3: after running the Coh-metrix, generating the input file for regression analysis
+# coh_creating_regresssion_input()
