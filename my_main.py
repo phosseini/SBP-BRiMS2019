@@ -351,7 +351,7 @@ def coh_creating_regresssion_input():
 # reformat_dataset()
 
 # step 2: creating the inputs for coh-metrix
-create_cohmetrix_input()
+# create_cohmetrix_input()
 
 # step 3: after running the Coh-metrix, generating the input file for regression analysis
 # coh_creating_regresssion_input()
