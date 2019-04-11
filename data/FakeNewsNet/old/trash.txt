@@ -1,0 +1,8 @@
+BuzzFeed_Fake_13-Webpage
+BuzzFeed_Fake_39-Webpage
+PolitiFact_Fake_24-Webpage
+PolitiFact_Fake_29-Webpage
+PolitiFact_Fake_37-Webpage
+PolitiFact_Fake_47-Webpage
+PolitiFact_Fake_70-Webpage
+PolitiFact_Fake_90-Webpage
