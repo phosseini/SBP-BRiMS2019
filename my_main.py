@@ -15,7 +15,7 @@ from my_utils import drop_constant_columns
 from pre_processing import text_clean
 
 # path to the FakeNewsNet dataset
-base_path = "data/FakeNewsNet/"
+base_path = "data/FakeNewsNet/old/"
 
 
 def read_fakenews_dataset():
@@ -133,8 +133,6 @@ def reformat_dataset():
     all_files = sorted(all_files)
     fake_spread_all = 0
     real_spread_all = 0
-    fake_affected_all = 0
-    real_affected_all = 0
     global_id = 1
 
     politi_news_spread, politi_news_spread_distinct = news_spread_count("PolitiFact")
@@ -163,8 +161,10 @@ def reformat_dataset():
                         spread_count = buzz_news_spread[news_id]
                         distinct_user_spread = buzz_news_spread_distinct[news_id]
                     try:
-                        news_title = text_clean(page_source["title"], True, True, False, 1)
-                        news_body = text_clean(page_source["text"], True, True, False, 1)
+                        # news_title = text_clean(page_source["title"], True, True, False, 1)
+                        # news_body = text_clean(page_source["text"], True, True, False, 1)
+                        news_title = page_source["title"]
+                        news_body = page_source["text"]
                         all_docs.append(news_title)
                         all_docs.append(news_body)
 
@@ -287,12 +287,14 @@ def coh_creating_regresssion_input():
     :return:
     """
     main_data = pd.read_csv(base_path + "processed/fakenewsnet.csv")
-    coh_data = pd.read_csv(base_path + "cohmetrix/cohout/fakenewsnet_coh.csv")
+    coh_data = pd.read_csv(base_path + "cohmetrix/cohout/fakenewsnet_coh_un.csv")
     x_columns = list(coh_data.iloc[:, 1:])
     x_reg = []
     y_reg = []
+    y_reg_total = []
     x_ids = []
     fact_labels = []
+    fact_checker = []
     for item in coh_data.iterrows():
         tmp = item[1][0].split('\\')
         tmp = tmp[len(tmp)-1].split('.')[0].split('_')
@@ -301,14 +303,22 @@ def coh_creating_regresssion_input():
 
         # finding the truth label
         my_record = main_data.loc[main_data['Id'] == news_id]
+        news_total_shares = my_record.values[0][7]
         main_news_distinct_shares = my_record.values[0][8]
         truth_label = my_record.values[0][9]
+
+        # fact_check -> 1: BuzzFeed, 2: PolitiFact
+        if "BuzzFeed" in my_record.values[0][4]:
+            fact_checker.append(1)
+        else:
+            fact_checker.append(2)
 
         # double checking the number of shares
         if news_distinct_shares == main_news_distinct_shares:
             if news_distinct_shares != 0:
                 x_reg.append(item[1][1:])
                 y_reg.append(news_distinct_shares)
+                y_reg_total.append(news_total_shares)
                 x_ids.append(news_id)
                 # adding fact checking label (fake/real)
                 if truth_label == "fake":
@@ -321,6 +331,7 @@ def coh_creating_regresssion_input():
     # define vectorized sigmoid
     log_func = np.vectorize(math.log10)
     y_reg = log_func(y_reg)
+    y_reg_total = log_func(y_reg_total)
 
     # converting list to dataframe
     x_reg = pd.DataFrame(np.array(x_reg).reshape(len(x_reg), len(x_columns)), columns=x_columns)
@@ -334,10 +345,12 @@ def coh_creating_regresssion_input():
 
     x_full = copy.deepcopy(x_reg)
     x_full["label"] = fact_labels
+    x_full["checker"] = fact_checker
+    x_full["total_shares"] = y_reg_total
     x_full["shares"] = y_reg
     x_full["id"] = x_ids
     x_full = x_full.fillna(0)
-    writer = pd.ExcelWriter(base_path + 'processed/fakenewsnet_full.xlsx')
+    writer = pd.ExcelWriter(base_path + 'processed/fakenewsnet_full_un.xlsx')
     x_full.to_excel(writer, 'Sheet1')
     writer.save()
 
@@ -354,4 +367,4 @@ def coh_creating_regresssion_input():
 # create_cohmetrix_input()
 
 # step 3: after running the Coh-metrix, generating the input file for regression analysis
-# coh_creating_regresssion_input()
+coh_creating_regresssion_input()
