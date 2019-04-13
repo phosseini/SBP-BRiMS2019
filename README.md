@@ -7,7 +7,7 @@ The input files to our analysis are news documents from [FakeNewsNet](https://gi
 
 ## Pre-processing
 
-We processed all the news documents in the dataset and stored them a reformatted version in an excel file which can found at ```data/FakeNewsNet/old/processed/fakenewsnet.csv```. The method we defined for cleaning documents is called ```text_clean()``` which can be found in the ```pre_processing.py```. A list of news documents' ids that we excluded from our analysis can be found in ```trash.txt``` at ```data/FakeNewsNet/trash.txt```. We excluded these documents since they did not have a proper value in their body text of the article thus useless for Coh-metrix. 
+We processed all the news documents in the dataset and stored them a reformatted version in an excel file which can found at ```data/FakeNewsNet/old/processed/fakenewsnet.csv```. A list of news documents' ids that we excluded from our analysis can be found in ```trash.txt``` at ```data/FakeNewsNet```. We excluded these documents since they did not have a proper value in their body text of the article thus useless for Coh-metrix analysis. 
 
 
 ## Applying Coh-metrix
