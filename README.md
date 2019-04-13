@@ -11,12 +11,14 @@ We processed all the news documents in the dataset and stored them a reformatted
 
 
 ## Applying Coh-metrix
-We created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh.csv``` which can be found in this repository at ```data/FakeNewsNet/cohmetrix/cohout/fakenewsnet_coh.csv```
+We created one single text file for each news document as the input for [Coh-metrix](http://cohmetrix.com/). We used Coh-metrix for computing computational cohesion and coherence metrics for the news documents. The output of Coh-metrix is a single csv file named ```fakenewsnet_coh_un.csv``` which can be found in this repository at ```data/FakeNewsNet/old/cohmetrix/cohout```
 
-At the end, we created a final excel file named ```fakenewsnet_full.xlsx``` which is the input to our regression analysis and can be found at ```data/FakeNewsNet/old/processed```. This file includes the Coh-metrix indexes for all the news documents in addition to the three following columns:
+At the end, we created a final excel file named ```fakenewsnet_full_un.xlsx``` which is the input to our regression analysis and can be found at ```data/FakeNewsNet/old/processed```. This file includes the Coh-metrix indexes for all the news documents in addition to the following columns:
 
-* ```label```: truth label of the news article from FakeNewsNet which can be either fake or real.
-* ```shares```: the number of distinct users who shared a news article. It is important to mention that in FakeNewsNet, each user can share the same news article multiple times; however, in our analysis, we considered the distinct number of users who shared a news article as the count of shares of the news article. 
+* ```label```: truth label of the news article from FakeNewsNet which can be either fake or real. "1" for fake, and "0" for real.
+* ```shares```: the number of distinct users who shared a news article. It is important to mention that in FakeNewsNet, each user can share the same news article multiple times; however, in our analysis, we considered the distinct number of users who shared a news article as the count of shares of the news article.
+* ```total_shares```: the total number of shares of a news document including users who shared the news document multiple times.
+* ```checker```: the source of fact checking the news documents. "1" for BuzzFeed and "2" for PolitiFact.
 * ```id```: id of the news article which matches the id columns in the ```fakenewsnet.csv```
 
 ## Regression analysis
