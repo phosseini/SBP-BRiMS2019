@@ -20,7 +20,7 @@ At the end, we created a final excel file named ```fakenewsnet_full.xlsx``` whic
 * ```id```: id of the news article which matches the id columns in the ```fakenewsnet.csv```
 
 ## Regression analysis
-All the regression analysis that we did in R can be found in a jupyter notebook named ```regression_analysis.ipynb```.
+All the regression analysis that we did in R can be found in a jupyter notebook named ```experiments.ipynb```.
 
 ### Citation
 Please use the following information to cite our paper:
