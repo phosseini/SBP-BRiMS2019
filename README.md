@@ -1,5 +1,7 @@
 # Does Causal Coherence Predict Online Spread of Social Media?
 
+[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/10.1007/978-3-319-76207-4_15.svg)](https://doi.org/10.1007/978-3-030-21741-9_19)
+
 This repository is dedicated to all of the documents, codes, data, results, and reproducibility report for our paper titled "Does Causal Coherence Predict Online Spread of Social Media?" which is accepted for publication at the SBP-BRiMS 2019 conference.
 
 ## Input dataset
