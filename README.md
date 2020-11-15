@@ -29,7 +29,7 @@ All the regression analysis that we did in R can be found in a jupyter notebook 
 ### Citation
 Please use the following information to cite our paper:
 
-```
+```bibtex
 @inproceedings{hosseini2019does,
   title={Does Causal Coherence Predict Online Spread of Social Media?},
   author={Hosseini, Pedram and Diab, Mona and Broniatowski, David A},
